@@ -1,0 +1,35 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "build": {
+      "outputs": ["build/**", "dist/**"],
+      "dependsOn": ["^build"]
+    },
+    "app#build": {
+      "outputs": ["build/**", "dist/**"],
+      "dependsOn": ["^build"],
+      "env": ["REACT_APP_ENV_VAR"]
+    },
+    "app2#build": {
+      "outputs": ["build/**", "dist/**"],
+      "dependsOn": ["^build"],
+      "env": ["REACT_APP_ENV_VAR", "REACT_APP_ENV_VAR2"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "@namespace/ui#dev": {
+      "dependsOn": ["^build"]
+    },
+    "@namespace/app#dev": {
+      "dependsOn": ["@namespace/ui#build"]
+    },
+    "@namespace/app2#dev": {
+      "dependsOn": ["@namespace/ui#build"]
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}
